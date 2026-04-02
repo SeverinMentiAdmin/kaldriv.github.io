@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kaldriv OÜ — Banking technology consulting. Temenos core banking implementations, regulatory compliance and wealth management IT advisory across DACH and Baltic markets." />
+  <title>Kaldriv OÜ — Banking Technology Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:       #185FA5;
+      --blue-light: #E6F1FB;
+      --blue-mid:   #B5D4F4;
+      --blue-dark:  #0C447C;
+      --text:       #1a1a1a;
+      --text-muted: #6b6b6b;
+      --text-faint: #a0a0a0;
+      --bg:         #ffffff;
+      --bg-surface: #f7f7f5;
+      --border:     rgba(0,0,0,0.10);
+      --border-mid: rgba(0,0,0,0.18);
+      --radius-sm:  6px;
+      --radius-md:  10px;
+      --radius-lg:  14px;
+      --font-sans:  'DM Sans', sans-serif;
+      --font-mono:  'DM Mono', monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --blue:       #378ADD;
+        --blue-light: #0c2540;
+        --blue-mid:   #0C447C;
+        --blue-dark:  #B5D4F4;
+        --text:       #f0f0ee;
+        --text-muted: #a0a09e;
+        --text-faint: #606060;
+        --bg:         #141413;
+        --bg-surface: #1e1e1c;
+        --border:     rgba(255,255,255,0.09);
+        --border-mid: rgba(255,255,255,0.16);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      padding: 88px 40px 72px;
+      border-bottom: 0.5px solid var(--border);
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--blue);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--text);
+      max-width: 620px;
+      margin-bottom: 20px;
+      letter-spacing: -0.3px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 12px;
+      padding: 5px 13px;
+      border-radius: 20px;
+      border: 0.5px solid var(--border-mid);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+    }
+
+    .pill-accent {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      border-color: var(--blue-mid);
+    }
+
+    /* ── SECTIONS ────────────────────────────── */
+    section {
+      padding: 64px 40px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--text-faint);
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+
+    .section-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 40px;
+      line-height: 1.75;
+    }
+
+    /* ── SERVICES GRID ───────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .svc-card {
+      background: var(--bg-surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .svc-card:hover { border-color: var(--border-mid); }
+
+    .svc-icon {
+      width: 26px;
+      height: 26px;
+      margin-bottom: 14px;
+      stroke: var(--blue);
+    }
+
+    .svc-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .svc-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .svc-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* ── MARKET PILLS ────────────────────────── */
+    .markets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mkt {
+      font-size: 12px;
+      padding: 6px 14px;
+      border: 0.5px solid var(--border-mid);
+      border-radius: 20px;
+      color: var(--text-muted);
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    .about-body {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 620px;
+      line-height: 1.85;
+      margin-bottom: 24px;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
+
+    .stat-num {
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--text-faint);
+    }
+
+    /* ── CONTACT ─────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 700px;
+    }
+
+    .contact-item { margin-bottom: 24px; }
+
+    .contact-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+    }
+
+    .contact-val {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+    }
+
+    .footer-left, .footer-right {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── ACCENT LINE ─────────────────────────── */
+    .accent-line {
+      width: 32px;
+      height: 2px;
+      background: var(--blue);
+      margin-bottom: 24px;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 56px 20px 48px; }
+      section { padding: 48px 20px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 0; }
+      footer { padding: 16px 20px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="26" height="20" viewBox="0 0 84 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="0,40 14,4 28,40 42,10 56,40 70,18 84,40"
+          stroke="#185FA5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="nav-wordmark">KALDRIV</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">CORE BANKING · TEMENOS · DACH &amp; BALTICS</div>
+    <h1>Banking technology consulting from the <em>northern edge</em></h1>
+    <p class="hero-sub">
+      Kaldriv OÜ is a specialist consultancy delivering Temenos core banking implementations,
+      regulatory compliance, and wealth management IT advisory across DACH and Baltic markets.
+    </p>
+    <div class="hero-pills">
+      <span class="pill pill-accent">Temenos specialist</span>
+      <span class="pill">Private banking</span>
+      <span class="pill">Regulatory compliance</span>
+      <span class="pill">Estonia · Switzerland</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-eyebrow">SERVICES</div>
+    <h2 class="section-title">What we deliver</h2>
+    <p class="section-body">
+      Senior-level engagement across the full Temenos implementation lifecycle —
+      from business requirements through delivery and regulatory alignment.
+    </p>
+    <div class="services-grid">
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <rect x="3" y="5" width="22" height="18" rx="2"/>
+          <line x1="3" y1="10" x2="25" y2="10"/>
+          <line x1="8" y1="15" x2="14" y2="15"/>
+          <line x1="8" y1="19" x2="18" y2="19"/>
+        </svg>
+        <div class="svc-title">Temenos implementation</div>
+        <div class="svc-desc">Full-cycle T24 and Transact delivery — BRD authoring, configuration, UAT and go-live support.</div>
+        <span class="svc-tag">CORE BANKING</span>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="14" cy="14" r="10"/>
+          <polyline points="9,14 12,17 19,11"/>
+        </svg>
+        <div class="svc-title">Regulatory &amp; compliance</div>
+        <div class="svc-desc">Basel III re-pipe, AML alignment, and migration advisory for EU-regulated banking entities.</div>
+        <span class="svc-tag">RISK &amp; COMPLIANCE</span>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 22 L6 14 L11 10 L14 13 L19 7 L22 10 L22 22 Z"/>
+        </svg>
+        <div class="svc-title">Wealth management IT</div>
+        <div class="svc-desc">Private banking platform advisory, portfolio system design, and client lifecycle architecture.</div>
+        <span class="svc-tag">PRIVATE BANKING</span>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <rect x="4" y="8" width="8" height="12" rx="1.5"/>
+          <rect x="16" y="4" width="8" height="16" rx="1.5"/>
+          <line x1="12" y1="14" x2="16" y2="12"/>
+        </svg>
+        <div class="svc-title">Market entry advisory</div>
+        <div class="svc-desc">Baltic and DACH market entry for fintechs and banks — licensing, vendor selection, go-to-market.</div>
+        <span class="svc-tag">STRATEGY</span>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="10" cy="10" r="5"/>
+          <circle cx="20" cy="18" r="5"/>
+          <line x1="14" y1="13" x2="16" y2="14"/>
+        </svg>
+        <div class="svc-title">Migration programmes</div>
+        <div class="svc-desc">Core banking migration planning and execution — legacy decommission, data migration, cutover.</div>
+        <span class="svc-tag">TRANSFORMATION</span>
+      </div>
+
+      <div class="svc-card">
+        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
+          <rect x="4" y="4" width="20" height="20" rx="2"/>
+          <line x1="9" y1="10" x2="19" y2="10"/>
+          <line x1="9" y1="14" x2="15" y2="14"/>
+          <line x1="9" y1="18" x2="17" y2="18"/>
+        </svg>
+        <div class="svc-title">Programme management</div>
+        <div class="svc-desc">Senior PM and delivery lead capacity for complex multi-workstream banking technology programmes.</div>
+        <span class="svc-tag">DELIVERY</span>
+      </div>
+
+    </div>
+    <div class="markets">
+      <span class="mkt">Germany</span>
+      <span class="mkt">Switzerland</span>
+      <span class="mkt">Austria</span>
+      <span class="mkt">Estonia</span>
+      <span class="mkt">Latvia</span>
+      <span class="mkt">Lithuania</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-eyebrow">ABOUT</div>
+    <h2 class="section-title">Senior expertise, lean delivery</h2>
+    <p class="about-body">
+      Kaldriv OÜ is a boutique banking technology consultancy headquartered in Tallinn, Estonia,
+      serving clients across the DACH region and the Baltic states. Founded by a Senior Director
+      with over a decade of Temenos practice leadership across Asia, Europe and the Baltics, the
+      firm brings principal-level expertise to every engagement — no junior hand-offs.
+    </p>
+    <p class="about-body">
+      Our background includes large-scale Temenos implementations at Tier 1 banks, Basel III
+      regulatory re-pipes, cross-border core banking migrations, and private wealth platform
+      architecture. We operate as an independent OÜ registered in Estonia, giving clients
+      a streamlined EU-based contracting structure with full GDPR compliance.
+    </p>
+    <div class="about-stats">
+      <div class="stat-item">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">YEARS TEMENOS</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Tier 1</span>
+        <span class="stat-label">BANK EXPERIENCE</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">EU</span>
+        <span class="stat-label">REGISTERED ENTITY</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-eyebrow">CONTACT</div>
+    <div class="accent-line"></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-item">
+          <div class="contact-label">ENTITY</div>
+          <div class="contact-val">Kaldriv OÜ</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">JURISDICTION</div>
+          <div class="contact-val">Tallinn, Estonia · EU</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">EMAIL</div>
+          <div class="contact-val"><a href="mailto:hello@kaldriv.ee">hello@kaldriv.ee</a></div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-item">
+          <div class="contact-label">MARKETS SERVED</div>
+          <div class="contact-val">DACH · Baltic states · Remote EU</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">ENGAGEMENTS</div>
+          <div class="contact-val">Project-based · Retainer · Staff augmentation</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">LINKEDIN</div>
+          <div class="contact-val"><a href="https://linkedin.com" target="_blank" rel="noopener">linkedin.com/company/kaldriv</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-left">© 2026 Kaldriv OÜ · Tallinn, Estonia</span>
+    <span class="footer-right">hello@kaldriv.ee</span>
+  </footer>
+
+</body>
+</html>
