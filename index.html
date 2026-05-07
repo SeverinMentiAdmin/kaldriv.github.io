@@ -1,550 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Kaldriv OÜ — Banking technology consulting. Temenos core banking implementations, regulatory compliance and wealth management IT advisory across DACH and Baltic markets." />
-  <title>Kaldriv OÜ — Banking Technology Consulting</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --blue:       #185FA5;
-      --blue-light: #E6F1FB;
-      --blue-mid:   #B5D4F4;
-      --blue-dark:  #0C447C;
-      --text:       #1a1a1a;
-      --text-muted: #6b6b6b;
-      --text-faint: #a0a0a0;
-      --bg:         #ffffff;
-      --bg-surface: #f7f7f5;
-      --border:     rgba(0,0,0,0.10);
-      --border-mid: rgba(0,0,0,0.18);
-      --radius-sm:  6px;
-      --radius-md:  10px;
-      --radius-lg:  14px;
-      --font-sans:  'DM Sans', sans-serif;
-      --font-mono:  'DM Mono', monospace;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaldriv OÜ — Temenos Implementation Expertise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --blue:       #378ADD;
-        --blue-light: #0c2540;
-        --blue-mid:   #0C447C;
-        --blue-dark:  #B5D4F4;
-        --text:       #f0f0ee;
-        --text-muted: #a0a09e;
-        --text-faint: #606060;
-        --bg:         #141413;
-        --bg-surface: #1e1e1c;
-        --border:     rgba(255,255,255,0.09);
-        --border-mid: rgba(255,255,255,0.16);
-      }
-    }
+  :root {
+    --ink:       #0f1117;
+    --ink-soft:  #4a4f5e;
+    --ink-muted: #8a8fa0;
+    --surface:   #ffffff;
+    --surface-2: #f4f6f9;
+    --surface-3: #eaecf2;
+    --accent:    #1a6bff;
+    --accent-lt: #e8f0ff;
+    --accent-dk: #0d4acc;
+    --gold:      #e8a020;
+    --gold-lt:   #fff8ec;
+    --border:    #dde1ea;
+    --radius:    10px;
+    --radius-lg: 18px;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
-    html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    body {
-      font-family: var(--font-sans);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-soft); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    padding: 8px 18px; border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .nav-cta:hover { background: var(--accent-dk); transform: translateY(-1px); }
 
-    a { color: var(--blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+  /* ── HERO ── */
+  .hero {
+    min-height: 88vh;
+    display: flex; align-items: center;
+    padding: 6rem 2rem 5rem;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 30%, #deeaff 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, #fff8ec 0%, transparent 60%),
+      var(--surface);
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.4;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 420px; gap: 5rem; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-lt); color: var(--accent);
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    padding: 6px 14px; border-radius: 100px;
+    border: 1px solid #c0d4ff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--ink-soft);
+    line-height: 1.7; max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 13px 28px; border-radius: var(--radius);
+    font-weight: 600; font-size: 15px;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(26,107,255,0.25);
+  }
+  .btn-primary:hover { background: var(--accent-dk); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,107,255,0.35); }
+  .btn-ghost {
+    color: var(--ink); font-weight: 500; font-size: 15px;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.15s;
+  }
+  .btn-ghost:hover { color: var(--accent); }
+  .btn-ghost svg { width: 16px; height: 16px; }
 
-    /* ── NAV ─────────────────────────────────── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg);
-      border-bottom: 0.5px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 60px;
-    }
+  /* hero card */
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: 0 8px 40px rgba(15,17,23,0.08);
+  }
+  .hero-card-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-muted);
+    margin-bottom: 1.2rem;
+  }
+  .stat-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .stat-box {
+    background: var(--surface-2);
+    border-radius: var(--radius); padding: 1rem;
+    border: 1px solid var(--border);
+  }
+  .stat-box .num {
+    font-family: var(--font-display);
+    font-size: 2rem; line-height: 1; color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .stat-box .lbl { font-size: 12px; color: var(--ink-muted); font-weight: 500; }
+  .market-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.2rem;
+  }
+  .tag {
+    font-size: 12px; font-weight: 500;
+    padding: 5px 12px; border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    background: var(--surface);
+  }
+  .tag.active { background: var(--accent-lt); color: var(--accent); border-color: #c0d4ff; }
+  .divider-line {
+    height: 1px; background: var(--border); margin: 1.2rem 0;
+  }
+  .platform-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .platform-pill {
+    font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 100px;
+    background: var(--gold-lt); color: var(--gold);
+    border: 1px solid #f0d090;
+  }
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.02em; line-height: 1.15;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1.05rem; color: var(--ink-soft);
+    line-height: 1.7; max-width: 540px;
+  }
 
-    .nav-wordmark {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 3px;
-      color: var(--text);
-    }
+  /* ── ABOUT ── */
+  .about { background: var(--surface-2); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .about-text p { color: var(--ink-soft); margin-bottom: 1.2rem; line-height: 1.75; }
+  .about-facts {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .fact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .fact-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--accent-lt);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .fact-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+  .fact-title { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+  .fact-desc { font-size: 13px; color: var(--ink-soft); }
 
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
+  /* ── SERVICES ── */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s;
+  }
+  .service-card:hover { border-color: #c0d4ff; transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,107,255,0.10); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--accent-lt);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+  .service-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+  .service-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .service-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
 
-    .nav-links a {
-      font-size: 13px;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
+  /* ── ENGAGEMENT ── */
+  .engagement { background: var(--surface-2); }
+  .engage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+  .engage-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex; gap: 1.2rem; align-items: flex-start;
+  }
+  .engage-num {
+    font-family: var(--font-display);
+    font-size: 2.2rem; line-height: 1; color: var(--accent);
+    min-width: 40px;
+  }
+  .engage-item h4 { font-weight: 600; margin-bottom: 4px; }
+  .engage-item p { font-size: 14px; color: var(--ink-soft); }
 
-    .nav-links a:hover { color: var(--text); }
+  /* ── MARKETS ── */
+  .markets-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+  .market-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 12px;
+    flex: 1; min-width: 200px;
+  }
+  .market-flag { font-size: 1.5rem; }
+  .market-card h4 { font-weight: 600; font-size: 14px; }
+  .market-card p { font-size: 13px; color: var(--ink-muted); }
 
-    /* ── HERO ─────────────────────────────────── */
-    .hero {
-      padding: 88px 40px 72px;
-      border-bottom: 0.5px solid var(--border);
-      max-width: 900px;
-    }
+  /* ── CONTACT ── */
+  .contact {
+    background:
+      radial-gradient(ellipse 50% 70% at 90% 50%, #deeaff 0%, transparent 60%),
+      var(--surface);
+  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.4rem;
+    text-decoration: none; color: var(--ink);
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .contact-link:hover { border-color: #c0d4ff; transform: translateX(4px); }
+  .contact-link-icon {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: var(--accent-lt);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .contact-link-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+  .contact-link-label { font-size: 12px; color: var(--ink-muted); font-weight: 500; }
+  .contact-link-value { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .contact-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.6rem; line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .contact-quote em { color: var(--accent); font-style: normal; }
 
-    .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--blue);
-      font-weight: 500;
-      margin-bottom: 20px;
-    }
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.5);
+    padding: 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px;
+  }
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 1.1rem; color: #fff;
+    text-decoration: none;
+  }
+  .footer-brand span { color: #6fa3ff; }
 
-    .hero h1 {
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 300;
-      line-height: 1.2;
-      color: var(--text);
-      max-width: 620px;
-      margin-bottom: 20px;
-      letter-spacing: -0.3px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--blue);
-    }
-
-    .hero-sub {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 520px;
-      margin-bottom: 32px;
-      line-height: 1.75;
-    }
-
-    .hero-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .pill {
-      font-size: 12px;
-      padding: 5px 13px;
-      border-radius: 20px;
-      border: 0.5px solid var(--border-mid);
-      color: var(--text-muted);
-      font-family: var(--font-sans);
-    }
-
-    .pill-accent {
-      background: var(--blue-light);
-      color: var(--blue-dark);
-      border-color: var(--blue-mid);
-    }
-
-    /* ── SECTIONS ────────────────────────────── */
-    section {
-      padding: 64px 40px;
-      border-bottom: 0.5px solid var(--border);
-    }
-
-    .section-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: var(--text-faint);
-      font-weight: 500;
-      margin-bottom: 28px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 10px;
-      letter-spacing: -0.2px;
-    }
-
-    .section-body {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 540px;
-      margin-bottom: 40px;
-      line-height: 1.75;
-    }
-
-    /* ── SERVICES GRID ───────────────────────── */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-bottom: 36px;
-    }
-
-    .svc-card {
-      background: var(--bg-surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      transition: border-color 0.2s;
-    }
-
-    .svc-card:hover { border-color: var(--border-mid); }
-
-    .svc-icon {
-      width: 26px;
-      height: 26px;
-      margin-bottom: 14px;
-      stroke: var(--blue);
-    }
-
-    .svc-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-
-    .svc-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      margin-bottom: 12px;
-    }
-
-    .svc-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: var(--blue);
-      background: var(--blue-light);
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-
-    /* ── MARKET PILLS ────────────────────────── */
-    .markets {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .mkt {
-      font-size: 12px;
-      padding: 6px 14px;
-      border: 0.5px solid var(--border-mid);
-      border-radius: 20px;
-      color: var(--text-muted);
-    }
-
-    /* ── ABOUT ───────────────────────────────── */
-    .about-body {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 620px;
-      line-height: 1.85;
-      margin-bottom: 24px;
-    }
-
-    .about-stats {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      margin-top: 32px;
-    }
-
-    .stat-item { display: flex; flex-direction: column; gap: 4px; }
-
-    .stat-num {
-      font-size: 26px;
-      font-weight: 300;
-      color: var(--text);
-      letter-spacing: -0.5px;
-    }
-
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      color: var(--text-faint);
-    }
-
-    /* ── CONTACT ─────────────────────────────── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      max-width: 700px;
-    }
-
-    .contact-item { margin-bottom: 24px; }
-
-    .contact-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--text-faint);
-      margin-bottom: 4px;
-    }
-
-    .contact-val {
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    /* ── FOOTER ──────────────────────────────── */
-    footer {
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg-surface);
-    }
-
-    .footer-left, .footer-right {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-faint);
-      letter-spacing: 0.5px;
-    }
-
-    /* ── ACCENT LINE ─────────────────────────── */
-    .accent-line {
-      width: 32px;
-      height: 2px;
-      background: var(--blue);
-      margin-bottom: 24px;
-    }
-
-    /* ── RESPONSIVE ──────────────────────────── */
-    @media (max-width: 640px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 56px 20px 48px; }
-      section { padding: 48px 20px; }
-      .contact-grid { grid-template-columns: 1fr; gap: 0; }
-      footer { padding: 16px 20px; flex-direction: column; gap: 8px; text-align: center; }
-    }
-  </style>
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-card { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .engage-grid { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#" class="nav-logo">
-      <svg width="26" height="20" viewBox="0 0 84 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polyline points="0,40 14,4 28,40 42,10 56,40 70,18 84,40"
-          stroke="#185FA5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
-      <span class="nav-wordmark">KALDRIV</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Kaldriv<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#engagement">Engagement</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-eyebrow">CORE BANKING · TEMENOS · DACH &amp; BALTICS</div>
-    <h1>Banking technology consulting from the <em>northern edge</em></h1>
-    <p class="hero-sub">
-      Kaldriv OÜ is a specialist consultancy delivering Temenos banking implementations,
-      regulatory compliance, and wealth management IT advisory across DACH and Baltic markets.
-    </p>
-    <div class="hero-pills">
-      <span class="pill pill-accent">Temenos specialist</span>
-      <span class="pill pill-accent">Private banking</span>
-      <span class="pill pill-accent">Regulatory compliance</span>
-      <span class="pill pill-accent">Europe · South-East Asia</span>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">Available for engagements</div>
+      <h1>Temenos expertise,<br><em>delivered</em> at senior level.</h1>
+      <p class="hero-sub">
+        Kaldriv OÜ provides implementation leadership and advisory for banks navigating
+        Temenos Wealth, Infinity, and Digital Channels programmes. No layers, no juniors —
+        just direct engagement with someone who has done this before.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start a conversation</a>
+        <a href="#services" class="btn-ghost">
+          See how I work
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-label">At a glance</div>
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="num">10+</div>
+          <div class="lbl">Years Temenos</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">3</div>
+          <div class="lbl">Regions delivered</div>
+        </div>
+      </div>
+      <div class="divider-line"></div>
+      <div class="hero-card-label">Markets</div>
+      <div class="market-tags">
+        <span class="tag active">DACH</span>
+        <span class="tag active">Baltics</span>
+        <span class="tag">Luxembourg</span>
+        <span class="tag">APAC</span>
+      </div>
+      <div class="divider-line"></div>
+      <div class="hero-card-label">Platforms</div>
+      <div class="platform-row">
+        <span class="platform-pill">Temenos Wealth</span>
+        <span class="platform-pill">Infinity</span>
+        <span class="platform-pill">Digital Channels</span>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="section-eyebrow">SERVICES</div>
-    <h2 class="section-title">What we deliver</h2>
-    <p class="section-body">
-      C-Suite-level engagement across the full Temenos implementation lifecycle —
-      from business requirements through delivery and regulatory alignment.
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">About</div>
+        <h2 class="section-title">The person doing the work is the person you talk to.</h2>
+        <p>
+          I'm Severin Menti, a Swiss management consultant specialising in Temenos core banking
+          implementations. Over  ten years I've led programmes across Switzerland,
+          Luxembourg, and Asia-Pacific — from initial scoping through to go-live.
+        </p>
+        <p>
+          Kaldriv OÜ is my independent consultancy, registered in Estonia. It exists
+          to give banks access to senior Temenos expertise without the overhead of a
+          large SI. You get direct engagement, clear communication, and someone who
+          has navigated these implementations before.
+        </p>
+        <p>
+          I'm based in Tallinn and work primarily in the DACH and Baltic markets,
+          with flexibility for remote engagements across Europe.
+        </p>
+      </div>
+      <div class="about-facts">
+        <div class="fact-card">
+          <div class="fact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <div class="fact-title">Temenos specialist</div>
+            <div class="fact-desc">Temenos Wealth, Infinity, Digital Channels — from configuration through to production</div>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <div class="fact-title">European reach</div>
+            <div class="fact-desc">Operating across DACH, Baltics, and Luxembourg — on-site or remote</div>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="fact-title">Senior-only delivery</div>
+            <div class="fact-desc">No staffing layer. The work is done by the person you engaged.</div>
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <div class="fact-title">Based in Tallinn</div>
+            <div class="fact-desc">Estonian OÜ, EU-based, resident — built for modern European consulting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-label">Services</div>
+    <h2 class="section-title">Three ways to engage.</h2>
+    <p class="section-sub">
+      Every engagement is scoped to what the programme actually needs.
+      No retainers for the sake of retainers.
     </p>
     <div class="services-grid">
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
-          <rect x="3" y="5" width="22" height="18" rx="2"/>
-          <line x1="3" y1="10" x2="25" y2="10"/>
-          <line x1="8" y1="15" x2="14" y2="15"/>
-          <line x1="8" y1="19" x2="18" y2="19"/>
-        </svg>
-        <div class="svc-title">Temenos implementation</div>
-        <div class="svc-desc">Full-cycle Core and Wealth delivery — BRD authoring, configuration, UAT and go-live support.</div>
-        <span class="svc-tag">CORE BANKING</span>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Implementation Leadership</h3>
+        <p>
+          Programme and workstream leadership for Temenos implementations. Covering
+          delivery governance, client-side coordination, solutioning and
+          keeping projects moving when they stall.
+        </p>
       </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="14" cy="14" r="10"/>
-          <polyline points="9,14 12,17 19,11"/>
-        </svg>
-        <div class="svc-title">Regulatory &amp; compliance</div>
-        <div class="svc-desc">Basel III regulatory requirements, AML alignment, and migration advisory for EU-regulated banking entities.</div>
-        <span class="svc-tag">RISK &amp; COMPLIANCE</span>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+        </div>
+        <h3>Project Recovery</h3>
+        <p>
+          Rapid assessment and stabilisation of troubled Temenos programmes. Identifying
+          root causes — not symptoms — and building a credible path back to delivery.
+        </p>
       </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 22 L6 14 L11 10 L14 13 L19 7 L22 10 L22 22 Z"/>
-        </svg>
-        <div class="svc-title">Wealth management IT</div>
-        <div class="svc-desc">Private banking platform advisory, portfolio system design, and client lifecycle architecture.</div>
-        <span class="svc-tag">PRIVATE BANKING</span>
-      </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
-          <rect x="4" y="8" width="8" height="12" rx="1.5"/>
-          <rect x="16" y="4" width="8" height="16" rx="1.5"/>
-          <line x1="12" y1="14" x2="16" y2="12"/>
-        </svg>
-        <div class="svc-title">Business transformation</div>
-        <div class="svc-desc">End-to-end operating model redesign — process reengineering, organisational change, and digital enablement for banking institutions.</div>
-        <span class="svc-tag">CHANGE &amp; DESIGN</span>
-      </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
-          <circle cx="10" cy="10" r="5"/>
-          <circle cx="20" cy="18" r="5"/>
-          <line x1="14" y1="13" x2="16" y2="14"/>
-        </svg>
-        <div class="svc-title">Migration programmes</div>
-        <div class="svc-desc">Core banking migration planning and execution — legacy decommission, data migration, cutover.</div>
-        <span class="svc-tag">TRANSFORMATION</span>
-      </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round">
-          <rect x="4" y="4" width="20" height="20" rx="2"/>
-          <line x1="9" y1="10" x2="19" y2="10"/>
-          <line x1="9" y1="14" x2="15" y2="14"/>
-          <line x1="9" y1="18" x2="17" y2="18"/>
-        </svg>
-        <div class="svc-title">Programme management</div>
-        <div class="svc-desc">Senior PM and delivery lead capacity for complex multi-workstream banking technology programmes.</div>
-        <span class="svc-tag">DELIVERY</span>
-      </div>
-
-    </div>
-    <div class="markets">
-      <span class="mkt">Estonia</span>
-      <span class="mkt">Germany</span>
-      <span class="mkt">Austria</span>
-      <span class="mkt">Switzerland</span>
-      <span class="mkt">Luxembourg</span>
-      <span class="mkt">Singapore</span>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-eyebrow">ABOUT</div>
-    <h2 class="section-title">Senior expertise, lean delivery</h2>
-    <p class="about-body">
-      Kaldriv OÜ is a boutique banking technology consultancy headquartered in Tallinn, Estonia,
-      serving clients across the DACH region and the Baltic states. Founded by a Severin Menti
-      with over a decade of Temenos practice leadership across Asia, Europe and the Baltics, the
-      firm brings principal-level expertise to every engagement — End - to - End.
-    </p>
-    <p class="about-body">
-      Our background includes large-scale Temenos implementations at Tier 1 banks, Basel III
-      regulatory implementations, cross-border banking migrations, and private wealth platform
-      architecture. We operate as an independent OÜ registered in Estonia, giving clients
-      a streamlined EU-based contracting structure with full GDPR compliance.
-    </p>
-    <div class="about-stats">
-      <div class="stat-item">
-        <span class="stat-num">10+</span>
-        <span class="stat-label">YEARS TEMENOS</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">Tier 1 - 3</span>
-        <span class="stat-label">BANK EXPERIENCE</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">EU</span>
-        <span class="stat-label">REGISTERED ENTITY</span>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Advisory</h3>
+        <p>
+          Strategic and technical advisory for banks evaluating or planning Temenos
+          programmes — vendor selection, scope definition, architecture,
+          and live support.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-eyebrow">CONTACT</div>
-    <div class="accent-line"></div>
+<!-- ENGAGEMENT MODEL -->
+<section class="engagement" id="engagement">
+  <div class="section-inner">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Straightforward to work with.</h2>
+    <p class="section-sub">Senior independent consulting, on terms that make sense for both sides.</p>
+    <div class="engage-grid">
+      <div class="engage-item">
+        <div class="engage-num">01</div>
+        <div>
+          <h4>Daily rate engagements</h4>
+          <p>Clear, transparent pricing. No markup on junior resources, no bloated project structures.</p>
+        </div>
+      </div>
+      <div class="engage-item">
+        <div class="engage-num">02</div>
+        <div>
+          <h4>Project-based scoping</h4>
+          <p>Fixed-scope engagements for advisory mandates where outcomes matter more than time spent.</p>
+        </div>
+      </div>
+      <div class="engage-item">
+        <div class="engage-num">03</div>
+        <div>
+          <h4>On-site or remote</h4>
+          <p>Flexible presence across DACH and the Baltics. On-site where it matters, remote where it doesn't.</p>
+        </div>
+      </div>
+      <div class="engage-item">
+        <div class="engage-num">04</div>
+        <div>
+          <h4>Rapid mobilisation</h4>
+          <p>Independent structure means shorter lead times. No approval chains, no resource allocation queues.</p>
+        </div>
+      </div>
+    </div>
+    <div class="markets-row" style="margin-top: 3rem;">
+      <div class="market-card">
+        <div class="market-flag">🇩🇪🇦🇹🇨🇭</div>
+        <div>
+          <h4>DACH</h4>
+          <p>Germany, Austria, Switzerland</p>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-flag">🇪🇪🇱🇻🇱🇹</div>
+        <div>
+          <h4>Baltics</h4>
+          <p>Estonia, Latvia, Lithuania</p>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-flag">🇱🇺</div>
+        <div>
+          <h4>Europe</h4>
+          <p>Luxembourg</p>
+        </div>
+      </div>
+      <div class="market-card">
+        <div class="market-flag">🌏</div>
+        <div>
+          <h4>Asia-Pacific</h4>
+          <p>Singapore, Indonesia, Malaysia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
     <div class="contact-grid">
       <div>
-        <div class="contact-item">
-          <div class="contact-label">ENTITY</div>
-          <div class="contact-val">Kaldriv OÜ</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">JURISDICTION</div>
-          <div class="contact-val">Tallinn, Estonia · EU</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">EMAIL</div>
-		  <!--Need to be updated later-->
-          <div class="contact-val"><a href="mailto:severin.menti@outlook.com">hello@kaldriv.ee</a></div>
-        </div>
+        <div class="section-label">Contact</div>
+        <p class="contact-quote">
+          "The right conversation<br>starts with a<br><em>direct message.</em>"
+        </p>
+        <p style="color: var(--ink-soft); font-size: 15px; max-width: 400px;">
+          If you're working on a Temenos programme and need senior input — or are
+          evaluating whether Kaldriv is the right fit — reach out directly.
+          No forms, no discovery calls for the sake of it.
+        </p>
       </div>
       <div>
-        <div class="contact-item">
-          <div class="contact-label">MARKETS SERVED</div>
-          <div class="contact-val">DACH · Baltic states · Remote EU · South-East Asia</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">ENGAGEMENTS</div>
-          <div class="contact-val">Project-based · Retainer · Staff augmentation</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">LINKEDIN</div>
-		  		  <!--Need to be updated later, company Page?-->
-          <div class="contact-val"><a href="https://www.linkedin.com/in/severin-menti/" target="_blank" rel="noopener">https://www.linkedin.com/in/severin-menti/</a></div>
+        <div class="contact-links">
+          <a href="https://linkedin.com/in/drake" class="contact-link">
+            <div class="contact-link-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-value">Connect on LinkedIn</div>
+            </div>
+          </a>
+          <a href="mailto:drake@kaldriv.ee" class="contact-link">
+            <div class="contact-link-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">info@kaldriv.ee</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/severin-menti/" class="contact-link">
+            <div class="contact-link-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">Web</div>
+              <div class="contact-link-value">kaldriv.ee</div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-left">© 2026 Kaldriv OÜ · Tallinn, Estonia</span>
-	<!--Need to be updated later-->
-    <span class="footer-right">hello@kaldriv.ee</span>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-brand">Kaldriv<span>.</span></a>
+  <span>© 2026 Kaldriv OÜ — Registered in Estonia</span>
+</footer>
 
 </body>
 </html>
